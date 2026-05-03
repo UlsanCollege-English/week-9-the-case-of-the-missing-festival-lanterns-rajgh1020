@@ -4,7 +4,9 @@
 ## Student Info
 
 Name: Raj Ghimire 
+
 Student number: 2412076
+
 GitHub username: rajgh1020
 
 ---
