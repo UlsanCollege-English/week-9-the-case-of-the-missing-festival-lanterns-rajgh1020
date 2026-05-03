@@ -127,3 +127,40 @@ def test_analyze_lanterns_ignores_unexpected_lantern_for_wrong_section():
 # - the log is empty but expected_lanterns is not empty
 # - the same lantern appears three times
 # - an expected lantern appears once correctly and once in the wrong section
+
+
+def test_analyze_lanterns_all_present_correct_sections():
+    expected_lanterns = {"gold-tiger", "blue-crane"}
+    lantern_log = [
+        ("gold-tiger", "Market Street"),
+        ("blue-crane", "River Walk"),
+    ]
+    correct_sections = {
+        "gold-tiger": "Market Street",
+        "blue-crane": "River Walk",
+    }
+
+    result = analyze_lanterns(expected_lanterns, lantern_log, correct_sections)
+
+    assert result["missing_lanterns"] == set()
+    assert result["unexpected_lanterns"] == set()
+    assert result["duplicate_lanterns"] == set()
+    assert result["wrong_section_lanterns"] == {}
+
+
+def test_analyze_lanterns_empty_log_with_expected():
+    expected_lanterns = {"white-lotus", "moon-rabbit"}
+    lantern_log = []
+    correct_sections = {
+        "white-lotus": "Temple Road",
+        "moon-rabbit": "River Walk",
+    }
+
+    result = analyze_lanterns(expected_lanterns, lantern_log, correct_sections)
+
+    assert result["seen_lanterns"] == set()
+    assert result["missing_lanterns"] == {"white-lotus", "moon-rabbit"}
+    assert result["unexpected_lanterns"] == set()
+    assert result["duplicate_lanterns"] == set()
+    assert result["count_by_section"] == {}
+    assert result["wrong_section_lanterns"] == {}
